@@ -93,20 +93,24 @@ class DataLoader():
     def imread(self, path):
         return scipy.misc.imread(path, mode='RGB').astype(np.float)
 
-    def dir_split(path):
-        data_dir = os.listdir(path) 
-        len_dir = len(os.listdir(path))
-        test_dir_len = (len_dir-100)*2
+def data_split(pathA,pathB,test_len):
+    dataA_dir = os.listdir(pathA)
+    dataB_dir = os.listdir(pathB) 
+
+    len_dirA = len(os.listdir(pathA))
+    len_dirB = len(os.listdir(pathB))
+
+    train_len = int(min(len_dirA,len_dirB))
+
+    test_A_dir = random.choice(dataA_dir,test_len)
+    test_B_dir = random.choice(dataB_dir,test_len)
+
+    train_A_temp = dataA_dir.remove(test_A_dir)
+    train_A_dir = random.choice(train_A_temp,train_len)
     
-        test_dir = random.choice(data_dir,test_dir_len)
-        train_dir = data_dir.remove(test_dir)
-        
-        test_A_dir = random.choice(test_dir,len(test_dir)//2)
-        test_B_dir = test_dir.remove(test_A_dir)
+    train_B_temp = dataB_dir.remove(test_B_dir)
+    train_B_dir = random.choice(train_B_temp,train_len)
+    
 
-        train_A_dir = random.choice(train_dir,len(train_dir)//2)
-        train_B_dir = train_dir.remove(train_A_dir)
-
-
-        return train_A_dir,train_B_dir,test_A_dir,test_B_dir
+    return train_A_dir,train_B_dir,test_A_dir,test_B_dir
 

@@ -94,11 +94,16 @@ class DataLoader():
         return scipy.misc.imread(path, mode='RGB').astype(np.float)
 
 def data_split(pathA,pathB,test_len):
-    dataA_dir = os.listdir(pathA)
-    dataB_dir = os.listdir(pathB) 
+    dataA_dir=[]
+    temp_A = os.listdir(pathA)
+    for i in temp_A:
+        dataA_dir.append(str(pathA+i))
+    
+    temp_file_path=[]
+    dataB_dir = search(pathB,temp_file_path)
 
-    len_dirA = len(os.listdir(pathA))
-    len_dirB = len(os.listdir(pathB))
+    len_dirA = len(dataA_dir)
+    len_dirB = len(dataB_dir)
 
     train_len = int(min(len_dirA,len_dirB))
 
@@ -113,4 +118,22 @@ def data_split(pathA,pathB,test_len):
     
 
     return train_A_dir,train_B_dir,test_A_dir,test_B_dir
+
+
+def search(dirname,temp_file_path):
+    try:
+        filenames = os.listdir(dirname)
+        for filename in filenames:
+            full_filename = os.path.join(dirname, filename)
+            if os.path.isdir(full_filename):
+                search(full_filename)
+            else:
+                ext = os.path.splitext(full_filename)[-1]
+                if ext == '.png': 
+                    temp_file_path.append(full_filename)
+    except PermissionError:
+        pass
+    return temp_file_path
+
+
 

@@ -384,14 +384,3 @@ class CycleGAN():
 
     def load_weights(self,filepath):
         self.combined.load_weights(filepath)
-
-
-
-"""
-def file_random_select(file_path,batch_size):
-            file_names = os.listdir(file_path)
-            img_ran = random.choice(file_names,batch_size) 
-
-
-Data loading 할떄, file_path에서 랜덤하게 batch_size-1 만큼 뽑아준다.
-"""

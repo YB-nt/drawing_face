@@ -4,6 +4,8 @@ import os
 from keras.datasets import mnist, cifar100,cifar10
 from keras.preprocessing.image import ImageDataGenerator, load_img, save_img, img_to_array
 
+import shutil
+
 import pandas as pd
 
 import numpy as np
